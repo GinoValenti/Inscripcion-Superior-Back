@@ -1,0 +1,135 @@
+/* Crea la BD inscripcion_superior  */
+
+CREATE DATABASE inscripcion_superior
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Argentina.utf8'
+    LC_CTYPE = 'Spanish_Argentina.utf8'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+/* crea la tabla solicitud_inscripcion */
+
+CREATE TABLE IF NOT EXISTS public.solicitud_inscripcion
+(
+    dni integer NOT NULL,
+    nombre character varying COLLATE pg_catalog."default",
+    apellido character varying COLLATE pg_catalog."default",
+    estado character varying COLLATE pg_catalog."default",
+    fecha_nacimiento date,
+    titulo_secundario character varying COLLATE pg_catalog."default",
+    id_carrera integer,
+    direccion character varying COLLATE pg_catalog."default",
+    telefono integer,
+    email character varying COLLATE pg_catalog."default",
+    CONSTRAINT solicitud_inscripcion_pkey PRIMARY KEY (dni),
+    CONSTRAINT dni_solicitante UNIQUE (dni),
+    CONSTRAINT id_solicitud_carrera FOREIGN KEY (id_carrera)
+        REFERENCES public.carrera (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.solicitud_inscripcion
+    OWNER to postgres;
+
+
+/* crea la tabla alumno */
+
+CREATE TABLE IF NOT EXISTS public.alumno
+(
+    dni integer NOT NULL,
+    nombre character varying COLLATE pg_catalog."default",
+    apellido character varying COLLATE pg_catalog."default",
+    fecha_nacimiento character varying COLLATE pg_catalog."default",
+    direccion character varying COLLATE pg_catalog."default",
+    telefono integer,
+    "contraseña" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT dni PRIMARY KEY (dni)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.alumno
+    OWNER to postgres;
+
+/* crea la tabla clases */
+
+CREATE TABLE IF NOT EXISTS public.clases
+(
+    id_carrera integer NOT NULL,
+    dni_alumno integer NOT NULL,
+    id_uc integer NOT NULL,
+    CONSTRAINT dni_alumno FOREIGN KEY (dni_alumno)
+        REFERENCES public.alumno (dni) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT id_carrera FOREIGN KEY (id_carrera)
+        REFERENCES public.carrera (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT id_uc FOREIGN KEY (id_uc)
+        REFERENCES public.unidad_curricular (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.clases
+    OWNER to postgres;
+
+/* crea la tabla administrador */
+
+CREATE TABLE IF NOT EXISTS public.administrador
+(
+    usuario character varying COLLATE pg_catalog."default" NOT NULL,
+    "contraseña" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT usuario PRIMARY KEY (usuario)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.administrador
+    OWNER to postgres;
+
+/* crea la tabla unidad_curricular */
+
+CREATE TABLE IF NOT EXISTS public.unidad_curricular
+(
+    id integer NOT NULL,
+    nombre character varying COLLATE pg_catalog."default",
+    tipo character varying COLLATE pg_catalog."default",
+    CONSTRAINT id_unidad_curricular PRIMARY KEY (id),
+    CONSTRAINT nombre_unidad_curricular UNIQUE (nombre)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.unidad_curricular
+    OWNER to postgres;
+
+
+/* crea la tabla carrera */
+
+CREATE TABLE IF NOT EXISTS public.carrera
+(
+    id integer NOT NULL,
+    nombre character varying COLLATE pg_catalog."default",
+    comision integer,
+    CONSTRAINT id_carrera PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.carrera
+    OWNER to postgres;
