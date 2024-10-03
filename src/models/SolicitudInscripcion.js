@@ -1,7 +1,7 @@
 const sequelize = require('../utils/connect');
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
-const Alumno = sequelize.define('alumno', {
+const SolicitudInscripcion = sequelize.define('solicitudInscripcion', {
     dni : {
         type: DataTypes.BIGINT,
         primaryKey: true,
@@ -16,8 +16,20 @@ const Alumno = sequelize.define('alumno', {
         type: DataTypes.CHAR,
         allowNull: false
     },
+    estado : {
+        type: DataTypes.CHAR,
+        allowNull: false
+    },
     fecha_nacimiento : {
         type: DataTypes.DATE,
+        allowNull: false
+    },
+    titulo_secundario : {
+        type: DataTypes.CHAR,
+        allowNull: false
+    },
+    id_carrera : {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     direccion : {
@@ -28,11 +40,11 @@ const Alumno = sequelize.define('alumno', {
         type: DataTypes.BIGINT,
         allowNull: false
     },
-    contraseña : {
+    email : {
         type: DataTypes.CHAR,
-        allowNull: true
+        allowNull: false
     }
 
 })
 
-module.exports = Alumno;
+module.exports = SolicitudInscripcion;
