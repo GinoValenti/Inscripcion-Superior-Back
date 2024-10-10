@@ -1,11 +1,11 @@
-/*
+
 const sequelize = require('../utils/connect');
 const { DataTypes, Model } = require('sequelize');
 const Alumno = require('../models/Alumno');
 const Carrera = require('../models/Carrera');
 const UnidadCurricular = require('../models/UnidadCurricular');
 
-const Clases = sequelize.define('clases', {
+const Clases = sequelize.define('Clases', {
     id : {
         type: DataTypes.BIGINT,
         primaryKey: true,
@@ -39,4 +39,3 @@ Carrera.belongsToMany(Alumno, {
 // Clases.sync()
 
 module.exports = Clases;
-*/

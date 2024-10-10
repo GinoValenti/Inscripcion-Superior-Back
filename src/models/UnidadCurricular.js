@@ -1,7 +1,7 @@
 const sequelize = require('../utils/connect');
 const { DataTypes } = require('sequelize');
 
-const UnidadCurricular = sequelize.define('unidadCurricular', {
+const UnidadCurricular = sequelize.define('UnidadCurricular', {
     id : {
         type: DataTypes.INTEGER,
         primaryKey: true,

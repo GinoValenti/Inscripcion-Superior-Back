@@ -1,7 +1,7 @@
 const sequelize = require('../utils/connect');
 const { DataTypes } = require('sequelize');
 
-const Administrador = sequelize.define('administrador', {
+const Administrador = sequelize.define('Administrador', {
     usuario : {
         type: DataTypes.CHAR,
         primaryKey: true,

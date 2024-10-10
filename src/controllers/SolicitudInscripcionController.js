@@ -11,16 +11,35 @@ const create = async(req, res) =>{
 }
 
 const getOne = async(req, res) =>{
-    const {dni} = req.params
-    const result = await SolicitudInscripcion.findByPk(dni)
-    if(!result) return res.sendStatus(404)
-    return req.json(result)
+    try{
+        const {dni} = req.params
+        if(!dni){
+            return res.status(400).send('Debes proporcionar un dni válido')
+        }
+        const result = await SolicitudInscripcion.findByPk(dni);
+        if(!result) {return res.sendStatus(404).send('No se encontró ninguna solicitud de inscripcion con ese dni')
+        } else {
+            res.status(200).json(result);
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const remove = async(req, res) =>{
-    const {dni} = req.params
-    await SolicitudInscripcion.destroy({where : {dni}})
-    return res.sendStatus(204)
+    try{
+        const {dni} = req.params
+        if(!dni){
+            return res.status(400).send('Debes proporcionar un dni válido')
+        }
+        const result = await SolicitudInscripcion.destroy({where : {dni}})
+        if(!result) {return res.sendStatus(404).send('No se encontró ninguna solicitud de inscripcion con ese dni')
+        } else {
+            res.status(204);
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const update = async(req, res) =>{

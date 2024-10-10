@@ -11,16 +11,35 @@ const create = async(req, res) =>{
 }
 
 const getOne = async(req, res) =>{
-    const {id} = req.params
-    const result = await Carrera.findByPk(id)
-    if(!result) return res.sendStatus(404)
-    return req.json(result)
+    try{
+        const {id} = req.params
+        if(!id){
+            return res.status(400).send('Debes proporcionar un id válido')
+        }
+        const result = await Carrera.findByPk(id);
+        if(!result) {return res.sendStatus(404).send('No se encontró ninguna carrera con ese id')
+        } else {
+            res.status(200).json(result);
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const remove = async(req, res) =>{
-    const {id} = req.params
-    await Carrera.destroy({where : {id}})
-    return res.sendStatus(204)
+    try{
+        const {id} = req.params
+        if(!id){
+            return res.status(400).send('Debes proporcionar un id válido')
+        }
+        const result = await Carrera.destroy({where : {id}})
+        if(!result) {return res.sendStatus(404).send('No se encontró ninguna carrera con ese id')
+        } else {
+            res.status(204);
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const update = async(req, res) =>{

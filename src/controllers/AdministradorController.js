@@ -11,16 +11,35 @@ const create = async(req, res) =>{
 }
 
 const getOne = async(req, res) =>{
-    const {usuario} = req.params
-    const result = await Administrador.findByPk(usuario)
-    if(!result) return res.sendStatus(404)
-    return req.json(result)
+    try{
+        const {usuario} = req.params
+        if(!usuario){
+            return res.status(400).send('Debes proporcionar un usuario válido')
+        }
+        const result = await Administrador.findByPk(usuario);
+        if(!result) {return res.sendStatus(404).send('No se encontró ningun administrador con ese usuario')
+        } else {
+            res.status(200).json(result);
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const remove = async(req, res) =>{
-    const {usuario} = req.params
-    await Administrador.destroy({where : {usuario}})
-    return res.sendStatus(204)
+    try{
+        const {usuario} = req.params
+        if(!usuario){
+            return res.status(400).send('Debes proporcionar un usuario válido')
+        }
+        const result = await Administrador.destroy({where : {usuario}})
+        if(!result) {return res.sendStatus(404).send('No se encontró ningun administrador con ese usuario')
+        } else {
+            res.status(204);
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const update = async(req, res) =>{

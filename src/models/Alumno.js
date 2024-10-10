@@ -1,7 +1,7 @@
 const sequelize = require('../utils/connect');
 const { DataTypes, Model } = require('sequelize');
 
-const Alumno = sequelize.define('alumno', {
+const Alumno = sequelize.define('Alumno', {
     dni : {
         type: DataTypes.BIGINT,
         primaryKey: true,

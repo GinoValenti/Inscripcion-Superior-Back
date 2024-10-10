@@ -1,7 +1,7 @@
 const sequelize = require('../utils/connect');
 const { DataTypes } = require('sequelize');
 
-const SolicitudInscripcion = sequelize.define('solicitudInscripcion', {
+const SolicitudInscripcion = sequelize.define('SolicitudInscripcion', {
     dni : {
         type: DataTypes.BIGINT,
         primaryKey: true,
