@@ -2,7 +2,7 @@ const sequelize = require('../utils/connect');
 const { DataTypes } = require('sequelize');
 
 const SolicitudInscripcion = sequelize.define('SolicitudInscripcion', {
-    dni : {
+    DNI : {
         type: DataTypes.BIGINT,
         primaryKey: true,
         unique: true,
@@ -18,20 +18,21 @@ const SolicitudInscripcion = sequelize.define('SolicitudInscripcion', {
     },
     estado : {
         type: DataTypes.CHAR,
-        allowNull: false
+        allowNull: false,
+        defaultValue:"Pendiente"
     },
     fecha_nacimiento : {
         type: DataTypes.DATE,
         allowNull: false
     },
-    titulo_secundario : {
+     titulo_secundario : {
         type: DataTypes.CHAR,
         allowNull: false
     },
     id_carrera : {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
+    }, 
     direccion : {
         type: DataTypes.CHAR,
         allowNull: false
