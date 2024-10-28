@@ -31,6 +31,11 @@ const Alumno = sequelize.define('Alumno', {
     contraseña : {
         type: DataTypes.CHAR,
         allowNull: true
+    },
+    rol : {
+        type: DataTypes.CHAR,
+        allowNull: false,
+        defaultValue: 'user'
     }
 
 })

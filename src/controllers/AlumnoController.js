@@ -26,6 +26,27 @@ const getOne = async(req, res) =>{
     }
 }
 
+const getRol = async (req, res) => {
+    try {
+        const { rol } = req.params;
+        if (!rol || (rol !== 'user' && rol !== 'admin')) {
+            return res.status(400).send('Debes proporcionar un rol válido ("user" o "admin")');
+        }
+        const result = await Alumno.findAll({
+            where: { rol }
+        });
+        if (!result || result.length === 0) {
+            return res.status(404).send('No se encontró ningún usuario con ese rol');
+        } else {
+            res.status(200).json(result);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error en el servidor');
+    }
+};
+
+
 const remove = async(req, res) =>{
     try{
         const {dni} = req.params
@@ -52,6 +73,7 @@ module.exports = {
     getAll,
     create,
     getOne,
+    getRol,
     remove,
     update
 }

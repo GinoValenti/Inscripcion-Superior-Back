@@ -5,7 +5,7 @@ const cors = require('cors');
 const router = require('./routes'); // Importar las rutas
 
 const app = express();
-const PORT = 4000;
+const PORT = 3000;
 
 // Middleware
 app.use(cors()); // Habilitar CORS
