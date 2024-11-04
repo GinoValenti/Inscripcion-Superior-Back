@@ -9,7 +9,7 @@ const Alumno = sequelize.define('Alumno', {
         allowNull: false
     },
     nombre : {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     apellido : {
@@ -21,7 +21,7 @@ const Alumno = sequelize.define('Alumno', {
         allowNull: false
     },
     direccion : {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     telefono : {
@@ -29,11 +29,11 @@ const Alumno = sequelize.define('Alumno', {
         allowNull: false
     },
     contraseña : {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     rol : {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: 'user'
     }

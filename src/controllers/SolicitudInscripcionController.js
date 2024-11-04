@@ -9,42 +9,59 @@ const create = async(req, res) =>{
     const result = await SolicitudInscripcion.create(req.body)
     return res.status(201).json(result)
 }
+const getOne = async (req, res) => {
+    try {
+        const { DNI } = req.params; // Cambié 'dni' a minúsculas para seguir la convención.
 
-const getOne = async(req, res) =>{
-    try{
-        const {dni} = req.params
-        if(!dni){
-            return res.status(400).send('Debes proporcionar un dni válido')
+        // Verificar si se proporciona un DNI
+        if (!DNI) {
+            return res.status(400).send('Debes proporcionar un DNI válido');
         }
-        const result = await SolicitudInscripcion.findByPk(dni);
-        if(!result) {return res.sendStatus(404).send('No se encontró ninguna solicitud de inscripcion con ese dni')
+
+        // Buscar el alumno por DNI
+        const result = await SolicitudInscripcion.findByPk(DNI);
+
+        // Verificar si se encontró el alumno
+        if (!result) {
+            return res.status(404).send('No se encontró ningún alumno con ese DNI');
         } else {
-            res.status(200).json(result);
+            // Enviar la información del alumno como respuesta
+            return res.status(200).json(result);
         }
-    }catch(error){
-        console.log(error)
+    } catch (error) {
+        console.error('Error al obtener el alumno:', error);
+        return res.status(500).send('Hubo un error al procesar la solicitud');
+    }
+}
+const remove = async (req, res) => {
+    try {
+        const { DNI } = req.params;
+
+        // Verificar si se proporciona un DNI
+        if (!DNI) {
+            return res.status(400).send('Debes proporcionar un DNI válido');
+        }
+
+        // Intentar eliminar la solicitud de inscripción
+        const result = await SolicitudInscripcion.destroy({ where: { DNI } });
+
+        // Verificar si se eliminó alguna solicitud
+        if (result === 0) {
+            return res.status(404).send('No se encontró ninguna solicitud de inscripción con ese DNI');
+        }
+
+        // Enviar respuesta de éxito con mensaje
+        return res.status(200).send('Solicitud eliminada correctamente');
+    } catch (error) {
+        console.error('Error al eliminar la solicitud:', error);
+        return res.status(500).send('Hubo un error al procesar la solicitud');
     }
 }
 
-const remove = async(req, res) =>{
-    try{
-        const {dni} = req.params
-        if(!dni){
-            return res.status(400).send('Debes proporcionar un dni válido')
-        }
-        const result = await SolicitudInscripcion.destroy({where : {dni}})
-        if(!result) {return res.sendStatus(404).send('No se encontró ninguna solicitud de inscripcion con ese dni')
-        } else {
-            res.status(204);
-        }
-    }catch(error){
-        console.log(error)
-    }
-}
 
 const update = async(req, res) =>{
-    const {dni} = req.params
-    const result = await SolicitudInscripcion.update(req.body, {where: {dni}, returning: true})
+    const {DNI} = req.params
+    const result = await SolicitudInscripcion.update(req.body, {where: {DNI}, returning: true})
     return res.json(result)
 }
 

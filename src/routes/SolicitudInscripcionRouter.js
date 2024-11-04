@@ -6,7 +6,7 @@ routerSolicitudInscripcion.route('/')
             .get(getAll)
             .post(create)
 
-routerSolicitudInscripcion.route('/:dni')
+routerSolicitudInscripcion.route('/:DNI')
             .get(getOne)
             .delete(remove)
             .put(update)
